@@ -1,0 +1,66 @@
+# --- Configuración General del Prompt ---
+format = """
+[┌─](bold white)$os$username$hostname$directory$git_branch$git_status$python$nodejs$rust
+[└─](bold white)$character"""
+
+# Si quieres que sea de una sola línea como el tuyo, usa este formato:
+# format = "$os$username$hostname$directory$git_branch$git_status$python$nodejs$rust$character"
+
+add_newline = true
+
+# --- Módulos específicos ---
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[hostname]
+ssh_only = false
+format = "in [🌐 $hostname]($style) "
+style = "bold dimmed white"
+
+[username]
+show_always = true
+style_user = "bold white"
+style_root = "bold red"
+format = "[$user]($style) "
+
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+style = "bold cyan"
+read_only = "   "
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = "on [$symbol$branch]($style) "
+
+[git_status]
+style = "bold red"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+[python]
+symbol = "🐍 "
+style = "bold yellow"
+pyenv_prefix = "venv "
+format = "via [$symbol$version]($style) "
+
+[nodejs]
+symbol = " "
+style = "bold green"
+format = "via [$symbol$version]($style) "
+
+[cmd_duration]
+min_time = 500
+format = "took [$duration]($style) "
+style = "bold yellow"
+
+[os]
+disabled = false
+style = "bold white"
+
+[os.symbols]
+Ubuntu = " "
+Debian = " "
+Linux = " "
