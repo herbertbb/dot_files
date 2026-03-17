@@ -21,7 +21,10 @@ echo "Instalando dotfiles desde: $DOTFILES_DIR"
 
 link_file "$DOTFILES_DIR/wezterm/wezterm.lua" "$HOME/.wezterm.lua"
 link_file "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
-link_file "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
+# No sobrescribimos ~/.bashrc por defecto; solo enlazamos los aliases.
+# Si quieres que el dotfiles bashrc se use como principal, restaura la siguiente línea:
+# link_file "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
 link_file "$DOTFILES_DIR/bash/.bash_aliases" "$HOME/.bash_aliases"
+link_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 
 echo "Instalación completada."
