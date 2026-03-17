@@ -105,12 +105,24 @@ else
 end
 -- ========== Mouse ==========
 config.mouse_bindings = {
+  -- Triple click: seleccionar zona semántica
   {
     event = { Down = { streak = 3, button = "Left" } },
     mods = 'NONE',
     action = act.SelectTextAtMouseCursor 'SemanticZone',
   },
-
+  -- Selección normal con ratón (inicio)
+  {
+    event = { Down = { streak = 1, button = "Left" } },
+    mods = 'NONE',
+    action = act.SelectTextAtMouseCursor("Cell"),
+  },
+  -- Al soltar el botón izquierdo, copiar selección a portapapeles y selección primaria
+  {
+    event = { Up = { streak = 1, button = "Left" } },
+    mods = 'NONE',
+    action = act.CompleteSelection("ClipboardAndPrimarySelection"),
+  },
 }
 
 
