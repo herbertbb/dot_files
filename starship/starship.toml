@@ -39,10 +39,11 @@ format = "on [$symbol$branch]($style) "
 [git_status]
 style = "bold red"
 format = '([\[$all_status$ahead_behind\]]($style) )'
-# Usa comillas simples para asegurar que los caracteres se interpreten literalmente
-untracked = "" 
+stashed = ""    # Desactiva el símbolo de stash que causa el [$]
 modified = "!"
-stashed = '\$'
+untracked = ""
+deleted = "✘"
+renamed = "»"
 
 [python]
 symbol = "🐍 "
