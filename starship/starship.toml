@@ -39,9 +39,10 @@ format = "on [$symbol$branch]($style) "
 [git_status]
 style = "bold red"
 format = '([\[$all_status$ahead_behind\]]($style) )'
-untracked = "" # Esto hará que no muestre el símbolo por archivos nuevos/ignorados
+# Usa comillas simples para asegurar que los caracteres se interpreten literalmente
+untracked = "" 
 modified = "!"
-stashed = "$"
+stashed = '\$'
 
 [python]
 symbol = "🐍 "
