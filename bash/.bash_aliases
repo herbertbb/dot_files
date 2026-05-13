@@ -3,3 +3,18 @@
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+# Selector inteligente de editor
+if command -v nvim >/dev/null 2>&1; then
+    export EDITOR='nvim'
+    export VISUAL='nvim'
+elif command -v vim >/dev/null 2>&1; then
+    export EDITOR='vim'
+    export VISUAL='vim'
+else
+    export EDITOR='nano'
+    export VISUAL='nano'
+fi
+
+# Alias rápido para no escribir nvim o vim cada vez
+alias v='$EDITOR'
