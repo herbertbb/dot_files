@@ -1,71 +1,105 @@
-# --- Configuración General del Prompt ---
-format = """
-[┌─](bold white)$os$username$hostname$directory$git_branch$git_status$python$nodejs$rust
-[└─](bold white)$character"""
-
-# Si quieres que sea de una sola línea como el tuyo, usa este formato:
-# format = "$os$username$hostname$directory$git_branch$git_status$python$nodejs$rust$character"
-
+# Starship Prompt - Pro, Universal & Safe
+"$schema" = 'https://starship.rs/config-schema.json'
+command_timeout = 800
 add_newline = true
 
-# --- Módulos específicos ---
+# --- Pro 2-line Prompt ---
+# Contexto arriba (OS, usuario, host, ambiente crítico si aplica, directorio, git, runtimes, duración comando)
+# Símbolo de acción abajo (❯ / ❮), bien visible
+format = """
+[](fg:#8aadf4)[](fg:#8aadf4)[ $os$username$hostname$env_var.STARSHIP_DISTRO$directory$git_branch$git_status$python$nodejs$cmd_duration ]
+[](fg:#a6da95)[](fg:#a6da95)$character
+"""
 
-[character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-
-[hostname]
-ssh_only = false
-format = "in [🌐 $hostname]($style) "
-style = "bold dimmed white"
-
-[username]
-show_always = true
-style_user = "bold white"
-style_root = "bold red"
-format = "[$user]($style) "
-
-[directory]
-truncation_length = 3
-truncation_symbol = "…/"
-style = "bold cyan"
-read_only = "   "
-
-[git_branch]
-symbol = " "
-style = "bold purple"
-format = "on [$symbol$branch]($style) "
-
-[git_status]
-style = "bold red"
-format = '([\[$all_status$ahead_behind\]]($style) )'
-stashed = ""    # Desactiva el símbolo de stash que causa el [$]
-modified = "!"
-untracked = ""
-deleted = "✘"
-renamed = "»"
-
-[python]
-symbol = "🐍 "
-style = "bold yellow"
-pyenv_prefix = "venv "
-format = "via [$symbol$version]($style) "
-
-[nodejs]
-symbol = " "
-style = "bold green"
-format = "via [$symbol$version]($style) "
-
-[cmd_duration]
-min_time = 500
-format = "took [$duration]($style) "
-style = "bold yellow"
-
+# ---------- OS Detection Universal ----------
 [os]
 disabled = false
 style = "bold white"
 
 [os.symbols]
-Ubuntu = " "
-Debian = " "
-Linux = " "
+Windows = " "
+Ubuntu  = " "
+Debian  = " "
+Arch    = " "
+CentOS  = " "
+Fedora  = " "
+Alpine  = " "
+Redhat  = " "
+Linux   = " "
+WSL     = "󰣇 "
+Macos   = " "
+Unknown = " "
+
+# ---------- Usuario / Host / Alerta Crítica / Directorio ----------
+[username]
+show_always = true
+style_user = "bold fg:#8aadf4"
+style_root = "bold fg:#ed8796"
+format = "[$user]($style) "
+
+[hostname]
+ssh_only = false
+format = "at [$hostname]($style) "
+style = "bold dimmed white"
+
+# Alerta especial si STARSHIP_DISTRO="prod" (candado rojo)
+[env_var.STARSHIP_DISTRO]
+format = "[$symbol]($style) "
+symbol = " "
+style = "bold fg:#ed8796"
+default = ""
+
+[directory]
+truncation_length = 4
+truncation_symbol = "…/"
+style = "bold fg:#a6da95"
+read_only = ""
+format = "in [$path]($style) "
+
+# ---------- Prompt Char / Vim mode ----------
+[character]
+success_symbol = "[❯](bold fg:#a6da95)"
+error_symbol   = "[❯](bold fg:#ed8796)"
+vimcmd_symbol  = "[❮](bold fg:#f5a97f)"
+
+# ---------- Git ----------
+[git_branch]
+symbol = " "
+style = "bold fg:#c6a0f6"
+format = "on [$symbol$branch]($style) "
+
+[git_status]
+style = "bold fg:#ed8796"
+format = '([$all_status$ahead_behind]($style) )'
+ignore_submodules = true
+stashed = ""
+modified = "[!](bold fg:#f5a97f)"
+untracked = "[?](bold fg:#eed49f)"
+deleted = "[✘](bold fg:#ed8796)"
+renamed = "[»](bold fg:#f5a97f)"
+
+# ---------- Python (con soporte uv cross-platform) ----------
+[python]
+python_binary = [
+  "C:\\ProgramData\\chocolatey\\bin\\uv.exe",
+  "uv",
+  "python3",
+  "python"
+]
+detect_files = ["uv.lock", "pyproject.toml", ".python-version", "requirements.txt", "Pipfile"]
+pyenv_prefix = "uv "
+symbol = " "
+style = "bold fg:#eed49f"
+format = "via [$symbol$pyenv_prefix$version]($style) "
+
+# ---------- NodeJS ----------
+[nodejs]
+symbol = " "
+style = "bold fg:#a6da95"
+format = "via [$symbol$version]($style) "
+
+# ---------- Duración de comando ----------
+[cmd_duration]
+min_time = 1000
+format = "[⏱ $duration]($style) "
+style = "bold fg:#eed49f"
