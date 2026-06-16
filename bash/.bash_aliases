@@ -16,5 +16,15 @@ else
     export VISUAL='nano'
 fi
 
+alias fd='fdfind'
+
 # Alias rápido para no escribir nvim o vim cada vez
 alias v='$EDITOR'
+
+
+alias ch-on='sudo systemctl start clickhouse-server && sleep 5 && clickhouse-client --query "SELECT version()"'
+alias ch-off='sudo systemctl stop clickhouse-server'
+
+alias z='zellij'
+
+alias gemma='ollama launch opencode --model gemma4:31b-cloud'
