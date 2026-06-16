@@ -17,13 +17,33 @@ link_file() {
   echo "Enlace creado: $target_file -> $source_file"
 }
 
-echo "Instalando dotfiles desde: $DOTFILES_DIR"
+# ──────────────────────────────────────────────
+# 1. JetBrainsMono Nerd Font
+# ──────────────────────────────────────────────
+echo ""
+echo "==> Instalando JetBrainsMono Nerd Font..."
+
+NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf"
+FONT_DIR="$HOME/.local/share/fonts"
+FONT_FILE="$FONT_DIR/JetBrainsMonoNerdFont-Regular.ttf"
+
+mkdir -p "$FONT_DIR"
+if [ -f "$FONT_FILE" ]; then
+  echo "  La fuente ya existe, se omite descarga."
+else
+  wget -q "$NERD_FONT_URL" -O "$FONT_FILE"
+  echo "  Fuente descargada."
+fi
+fc-cache -fv 2>/dev/null | tail -1
+echo ""
+
+# ──────────────────────────────────────────────
+# 2. Symlinks
+# ──────────────────────────────────────────────
+echo "==> Creando enlaces simbólicos..."
 
 link_file "$DOTFILES_DIR/wezterm/wezterm.lua" "$HOME/.wezterm.lua"
 link_file "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
-# No sobrescribimos ~/.bashrc por defecto; solo enlazamos los aliases.
-# Si quieres que el dotfiles bashrc se use como principal, restaura la siguiente línea:
-# link_file "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
 link_file "$DOTFILES_DIR/bash/.bash_aliases" "$HOME/.bash_aliases"
 link_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 
@@ -31,4 +51,8 @@ link_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
 link_file "$DOTFILES_DIR/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 link_file "$DOTFILES_DIR/nvim/lazy-lock.json" "$HOME/.config/nvim/lazy-lock.json"
 
+# Zellij
+link_file "$DOTFILES_DIR/zellij/config.kdl" "$HOME/.config/zellij/config.kdl"
+
+echo ""
 echo "Instalación completada."
